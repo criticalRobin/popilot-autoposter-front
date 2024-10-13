@@ -19,7 +19,7 @@ export default {
 
 <template>
   <ul class="menu bg-erieblack rounded-none w-56">
-    <img class="mb-2 px-4 py-4" src="../assets/logo.svg" alt="popilot-logo" />
+    <img class="mb-2 px-4 py-4" src="../../assets/logo.svg" alt="popilot-logo" />
     <li @click="setActive('home')">
       <a
         :class="[
