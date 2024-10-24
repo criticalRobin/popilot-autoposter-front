@@ -9,7 +9,7 @@ import AppSidebar from "../components/layout/AppSidebar.vue";
     <div class="flex-1 flex flex-col">
       <AppNavbar />
       <main class="flex-1 overflow-auto py-5 px-8">
-        <slot />
+        <RouterView />
       </main>
     </div>
   </div>

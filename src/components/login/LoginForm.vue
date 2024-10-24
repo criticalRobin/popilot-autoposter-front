@@ -1,8 +1,34 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
+import { useAuthStore } from "../../stores/authStore";
+import { useRouter } from "vue-router";
+
+const authStore = useAuthStore();
+const router = useRouter();
+const username = ref("");
+const password = ref("");
+
+onMounted(() => {
+  authStore.loadFromLocalStorage();
+
+  if (authStore.isLogged) {
+    router.push("/home");
+  }
+});
+
+const handleSubmit = async () => {
+  await authStore.login({ username: username.value, password: password.value });
+
+  if (authStore.isLogged) {
+    console.log(authStore.user);
+    router.push("/home");
+  }
+};
+</script>
 
 <template>
   <form
-    action="submit"
+    @submit.prevent="handleSubmit"
     class="px-32 py-10 flex flex-col justify-center items-center"
   >
     <label class="form-control w-full max-w-xs">
@@ -15,6 +41,8 @@
         type="text"
         placeholder="Usuario"
         class="input input-bordered w-full max-w-xs"
+        required
+        v-model="username"
       />
     </label>
     <label class="form-control w-full max-w-xs">
@@ -25,6 +53,8 @@
         type="password"
         placeholder="Contraseña"
         class="input input-bordered w-full max-w-xs"
+        required
+        v-model="password"
       />
     </label>
     <button

@@ -1,4 +1,8 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { useAuthStore } from "../../stores/authStore";
+
+const authStore = useAuthStore();
+</script>
 
 <template>
   <div class="navbar bg-white">
@@ -9,17 +13,16 @@
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
           <div class="w-10 rounded-full">
-            <img
-              alt="user-avatar"
-              src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
-            />
+            <img alt="user-avatar" src="../../assets/user-logo.png" />
           </div>
         </div>
         <ul
           tabindex="0"
           class="menu menu-sm dropdown-content bg-powderblue rounded-box z-[1] mt-3 w-36 p-2 shadow"
         >
-          <li><a class="text-erieblack font-semibold">Cerrar Sesión</a></li>
+          <li @click="authStore.logout()">
+            <a class="text-erieblack font-semibold">Cerrar Sesión</a>
+          </li>
         </ul>
       </div>
     </div>

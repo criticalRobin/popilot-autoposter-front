@@ -1,19 +1,10 @@
-<script>
+<script lang="ts" setup>
 import { ref } from "vue";
 
-export default {
-  setup() {
-    const active = ref("home");
+const active = ref("home");
 
-    const setActive = (item) => {
-      active.value = item;
-    };
-
-    return {
-      active,
-      setActive,
-    };
-  },
+const setActive = (item) => {
+  active.value = item;
 };
 </script>
 

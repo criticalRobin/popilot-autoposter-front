@@ -1,3 +1,7 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import Title from "../components/shared/Title.vue";
+</script>
 
-<template></template>
+<template>
+  <Title />
+</template>
