@@ -1,11 +1,23 @@
 <script lang="ts" setup>
 import { ref } from "vue";
+import { useAuthStore } from "../../stores/authStore";
+import { useRouter } from "vue-router";
 
 const active = ref("home");
+const authStore = useAuthStore();
+const router = useRouter();
 
-const setActive = (item) => {
-  active.value = item;
-};
+const setActive = (menu: string) => {
+  active.value = menu;
+  
+  if(menu === 'home') {
+    router.push({ name: "Home" });
+  }
+
+  if (menu === 'social-network') {
+    router.push({ name: "SocialNetwork" });
+  }
+}
 </script>
 
 <template>
@@ -20,11 +32,11 @@ const setActive = (item) => {
         ><i class="fa fa-home text-xl mr-3"></i>Inicio</a
       >
     </li>
-    <li @click="setActive('socials')">
+    <li @click="setActive('social-network')">
       <a
         :class="[
           'font-medium',
-          active === 'socials' ? 'text-moonstone' : 'text-white',
+          active === 'social-network' ? 'text-moonstone' : 'text-white',
         ]"
         ><i class="fa fa-gratipay text-xl mr-3"</i>Redes Sociales</a
       >
@@ -38,7 +50,7 @@ const setActive = (item) => {
         ><i class="fa fa-thumbs-o-up text-xl mr-3"></i>Posts</a
       >
     </li>
-    <li @click="setActive('premium')">
+    <li v-if="!authStore.isPremiumUser" @click="setActive('premium')">
       <a
         :class="[
           'font-medium',

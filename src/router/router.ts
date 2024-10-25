@@ -1,23 +1,32 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-import LoginView from "../views/LoginView.vue";
-import BaseLayout from "../layouts/BaseLayout.vue";
 import { useAuthStore } from "../stores/authStore";
+
+// Implementación de lazy loading para los componentes
+const HomeView = () => import("../views/HomeView.vue");
+const LoginView = () => import("../views/LoginView.vue");
+const SocialNetworkView = () => import("../views/SocialNetworkView.vue");
+const BaseLayout = () => import("../layouts/BaseLayout.vue");
 
 const routes = [
   {
     path: "/",
-    component: LoginView,
     name: "Login",
+    component: LoginView,
   },
   {
     path: "/home",
-    component: () => BaseLayout,
+    component: BaseLayout,
+    meta: { requiresAuth: true },
     children: [
       {
         path: "",
-        component: () => HomeView,
         name: "Home",
+        component: HomeView,
+      },
+      {
+        path: "social-network",
+        name: "SocialNetwork",
+        component: SocialNetworkView,
         meta: { requiresAuth: true },
       },
     ],
