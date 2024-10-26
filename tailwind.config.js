@@ -9,6 +9,7 @@ export default {
   theme: {
     extend: {
       colors: {
+        ig: "#C13584",
         lapislazuli: "#1C5D99",
         moonstone: "#639FAB",
         powderblue: "#BBCDE5",

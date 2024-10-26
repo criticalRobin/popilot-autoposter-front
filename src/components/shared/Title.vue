@@ -44,5 +44,9 @@ const router = useRouter();
     </span>
     <Breadcrumbs v-if="breadcrumbs" :items="breadcrumbs" />
   </div>
-  <hr class="mt-3 bg-moonstone" style="height: 1.5px" />
+  <hr
+    class="bg-moonstone mb-4"
+    :class="{ 'mt-3': router.currentRoute.value.name === 'Home' }"
+    style="height: 1.5px"
+  />
 </template>

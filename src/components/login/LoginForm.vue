@@ -20,7 +20,6 @@ const handleSubmit = async () => {
   await authStore.login({ username: username.value, password: password.value });
 
   if (authStore.isLogged) {
-    console.log(authStore.user);
     router.push("/home");
   }
 };
