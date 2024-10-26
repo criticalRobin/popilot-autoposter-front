@@ -1,6 +1,10 @@
 <script lang="ts" setup>
+import { ref, computed } from "vue";
 import { IBaseSocialNetwork } from "../../interfaces/social-netowrk.interface";
 import Paginator from "../shared/Paginator.vue";
+import { useFilter } from "../../composables/useFilter";
+import Searcher from "../shared/Searcher.vue";
+import SocialNetworkAddDrop from "./SocialNetworkAddDrop.vue";
 
 const props = defineProps<{
   columns: string[];
@@ -11,10 +15,25 @@ const props = defineProps<{
   currentPage: number;
   totalPages: number;
 }>();
+
+const filterText = ref("");
+
+const filteredData = computed(() => {
+  const { filteredData: newFilteredData } = useFilter(
+    props.data,
+    "name",
+    filterText.value
+  );
+  return newFilteredData.value;
+});
 </script>
 
 <template>
   <div class="overflow-x-auto">
+    <div class="flex justify-between">
+      <Searcher placeholder="Buscar..." v-model="filterText" />
+      <SocialNetworkAddDrop />
+    </div>
     <table class="table w-full text-center">
       <thead>
         <tr class="border-b border-gray-300">
@@ -25,9 +44,9 @@ const props = defineProps<{
       </thead>
       <tbody>
         <tr
-          v-for="(item, index) in data"
+          v-for="(item, index) in filteredData"
           :key="item.id || index"
-          class="border-b border-gray-300"
+          class="border-gray-300"
         >
           <td>{{ item.name }}</td>
           <td>

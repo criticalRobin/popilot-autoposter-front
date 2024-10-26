@@ -27,7 +27,7 @@ const setActive = (menu: string) => {
       <a
         :class="[
           'font-medium',
-          active === 'home' ? 'text-moonstone' : 'text-white',
+          active === 'home' ? 'text-lapislazuli' : 'text-white',
         ]"
         ><i class="fa fa-home text-xl mr-3"></i>Inicio</a
       >
@@ -36,7 +36,7 @@ const setActive = (menu: string) => {
       <a
         :class="[
           'font-medium',
-          active === 'social-network' ? 'text-moonstone' : 'text-white',
+          active === 'social-network' ? 'text-lapislazuli' : 'text-white',
         ]"
         ><i class="fa fa-gratipay text-xl mr-3"</i>Redes Sociales</a
       >
@@ -45,7 +45,7 @@ const setActive = (menu: string) => {
       <a
         :class="[
           'font-medium',
-          active === 'posts' ? 'text-moonstone' : 'text-white',
+          active === 'posts' ? 'text-lapislazuli' : 'text-white',
         ]"
         ><i class="fa fa-thumbs-o-up text-xl mr-3"></i>Posts</a
       >
@@ -54,7 +54,7 @@ const setActive = (menu: string) => {
       <a
         :class="[
           'font-medium',
-          active === 'premium' ? 'text-moonstone' : 'text-white',
+          active === 'premium' ? 'text-lapislazuli' : 'text-white',
         ]"
         ><i class="fa fa-cc-stripe text-lg mr-2"></i>Premium</a
       >
