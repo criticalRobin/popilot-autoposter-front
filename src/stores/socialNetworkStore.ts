@@ -3,7 +3,7 @@ import {
   IFacebook,
   IInstagram,
   IX,
-} from "../interfaces/social-netowrk.interface";
+} from "../interfaces/social-network.interface";
 import { ref } from "vue";
 import { socialNetworkService } from "../services/socialNetworkService";
 
@@ -20,10 +20,19 @@ export const useSocialNetworkStore = defineStore("socialNetwork", () => {
     xAccounts.value = data.x_accounts;
   };
 
+  const createSocialNetwork = async (socialNetwork: any) => {
+    try {
+      await socialNetworkService.createSocialNetwork(socialNetwork);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return {
     facebookAccounts,
     instagramAccounts,
     xAccounts,
     getSocialNetworks,
+    createSocialNetwork,
   };
 });

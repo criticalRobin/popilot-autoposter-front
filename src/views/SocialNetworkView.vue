@@ -2,7 +2,7 @@
 import { onMounted, computed, ref } from "vue";
 import Title from "../components/shared/Title.vue";
 import SocialNetworkTable from "../components/social-network/SocialNetworkTable.vue";
-import { IBaseSocialNetwork } from "../interfaces/social-netowrk.interface";
+import { IBaseSocialNetwork } from "../interfaces/social-network.interface";
 import { useSocialNetworkStore } from "../stores/socialNetworkStore";
 
 const socialNetworkStore = useSocialNetworkStore();
@@ -20,7 +20,7 @@ const socialNetworks = computed<IBaseSocialNetwork[]>(() => [
 ]);
 
 const currentPage = ref(1);
-const itemsPerPage = 8;
+const itemsPerPage = 5;
 const totalPages = computed(() =>
   Math.ceil(socialNetworks.value.length / itemsPerPage)
 );

@@ -2,7 +2,7 @@ export interface IBaseSocialNetwork {
   id?: number;
   name: string;
   social_network_type: string;
-  created_at: Date;
+  created_at?: Date;
   status?: boolean;
   user_owner?: number;
 }
@@ -22,7 +22,7 @@ export interface IX extends IBaseSocialNetwork {
   access_secret?: string;
   consumer_key?: string;
   consumer_secret?: string;
-  bearerToken?: string;
+  bearer_token?: string;
 }
 
 export interface ISocialNetworks {

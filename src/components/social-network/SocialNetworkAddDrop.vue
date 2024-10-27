@@ -1,4 +1,15 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { ref } from "vue";
+import SocialNetworkCreateUpdateModal from "./SocialNetworkCreateUpdateModal.vue";
+
+const modalRef = ref<InstanceType<
+  typeof SocialNetworkCreateUpdateModal
+> | null>(null);
+
+function openModal(socialNetworkType: string) {
+  modalRef.value?.openModal(socialNetworkType);
+}
+</script>
 
 <template>
   <details class="dropdown dropdown-end">
@@ -10,9 +21,10 @@
     <ul
       class="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
     >
-      <li><a>Facebook</a></li>
-      <li><a>Instagram</a></li>
-      <li><a>X</a></li>
+      <li @click="openModal('FB')"><a>Facebook</a></li>
+      <li @click="openModal('IG')"><a>Instagram</a></li>
+      <li @click="openModal('X')"><a>X</a></li>
     </ul>
   </details>
+  <SocialNetworkCreateUpdateModal ref="modalRef" />
 </template>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
-import { IBaseSocialNetwork } from "../../interfaces/social-netowrk.interface";
+import { IBaseSocialNetwork } from "../../interfaces/social-network.interface";
 import Paginator from "../shared/Paginator.vue";
 import { useFilter } from "../../composables/useFilter";
 import Searcher from "../shared/Searcher.vue";

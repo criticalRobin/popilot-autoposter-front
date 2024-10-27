@@ -18,12 +18,9 @@ const authStore = useAuthStore();
         </div>
         <ul
           tabindex="0"
-          class="menu menu-sm dropdown-content bg-powderblue rounded-box z-[1] mt-3 w-36 p-2 shadow"
+          class="menu menu-sm dropdown-content rounded-box z-[1] mt-3 w-36 p-2 shadow"
         >
-          <button
-            @click="authStore.logout()"
-            class="btn bg-powderblue border-powderblue hover:bg-powderblue hover:border-powderblue"
-          >
+          <button @click="authStore.logout()" class="btn">
             <i class="fa fa-home text-xl mr-3"></i>
             Logout
           </button>
