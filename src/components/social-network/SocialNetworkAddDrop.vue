@@ -7,7 +7,7 @@ const modalRef = ref<InstanceType<
 > | null>(null);
 
 function openModal(socialNetworkType: string) {
-  modalRef.value?.openModal(socialNetworkType);
+  modalRef.value?.openModal(socialNetworkType, null);
 }
 </script>
 

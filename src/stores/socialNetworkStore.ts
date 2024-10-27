@@ -28,11 +28,20 @@ export const useSocialNetworkStore = defineStore("socialNetwork", () => {
     }
   };
 
+  const updateSocialNetwork = async (id: number, socialNetwork: any) => {
+    try {
+      await socialNetworkService.updateSocialNetwork(id, socialNetwork);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return {
     facebookAccounts,
     instagramAccounts,
     xAccounts,
     getSocialNetworks,
     createSocialNetwork,
+    updateSocialNetwork,
   };
 });

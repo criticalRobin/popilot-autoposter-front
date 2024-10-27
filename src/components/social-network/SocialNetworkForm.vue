@@ -1,14 +1,11 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import {
-  IFacebook,
-  IInstagram,
-  IX,
-} from "../../interfaces/social-network.interface";
+import { ref, watch } from "vue";
 import { useSocialNetworkStore } from "../../stores/socialNetworkStore";
+import { useSocialNetworkBuilder } from "../../composables/useSocialNetworkBuilder";
 
 const props = defineProps<{
   socialNetworkType: string;
+  socialNetworkObject: any | null;
 }>();
 
 const name = ref("");
@@ -22,43 +19,72 @@ const consumerKey = ref("");
 const consumerSecret = ref("");
 const bearerToken = ref("");
 
+const emit = defineEmits(["submitSuccess"]);
 const socialNetworkStore = useSocialNetworkStore();
+const { buildSocialNetwork } = useSocialNetworkBuilder();
 
 const handleSubmit = async () => {
-  let socialNetwork: IFacebook | IInstagram | IX | null = null;
+  const socialNetwork = buildSocialNetwork(props.socialNetworkType, {
+    name: name.value,
+    page_id: pageId.value,
+    page_access_token: accessToken.value,
+    username: username.value,
+    password: password.value,
+    access_key: accessKey.value,
+    access_secret: accessSecret.value,
+    consumer_key: consumerKey.value,
+    consumer_secret: consumerSecret.value,
+    bearer_token: bearerToken.value,
+  });
 
-  if (props.socialNetworkType === "FB") {
-    socialNetwork = {
-      social_network_type: props.socialNetworkType,
-      name: name.value,
-      page_id: pageId.value,
-      page_access_token: accessToken.value,
-    };
+  if (props.socialNetworkObject) {
+    await socialNetworkStore.updateSocialNetwork(
+      props.socialNetworkObject.id,
+      socialNetwork
+    );
+  } else {
+    await socialNetworkStore.createSocialNetwork(socialNetwork);
   }
-
-  if (props.socialNetworkType === "IG") {
-    socialNetwork = {
-      social_network_type: props.socialNetworkType,
-      name: name.value,
-      username: username.value,
-      password: password.value,
-    };
-  }
-
-  if (props.socialNetworkType === "X") {
-    socialNetwork = {
-      social_network_type: props.socialNetworkType,
-      name: name.value,
-      access_key: accessKey.value,
-      access_secret: accessSecret.value,
-      consumer_key: consumerKey.value,
-      consumer_secret: consumerSecret.value,
-      bearer_token: bearerToken.value,
-    };
-  }
-
-  await socialNetworkStore.createSocialNetwork(socialNetwork);
+  emit("submitSuccess");
+  cleanFormFields();
+  socialNetworkStore.getSocialNetworks();
 };
+
+watch(
+  () => props.socialNetworkObject,
+  (newVal) => {
+    if (newVal) {
+      name.value = newVal.name || "";
+      if (props.socialNetworkType === "FB") {
+        pageId.value = newVal.page_id || "";
+        accessToken.value = newVal.page_access_token || "";
+      } else if (props.socialNetworkType === "IG") {
+        username.value = newVal.username || "";
+        password.value = newVal.password || "";
+      } else if (props.socialNetworkType === "X") {
+        accessKey.value = newVal.access_key || "";
+        accessSecret.value = newVal.access_secret || "";
+        consumerKey.value = newVal.consumer_key || "";
+        consumerSecret.value = newVal.consumer_secret || "";
+        bearerToken.value = newVal.bearer_token || "";
+      }
+    }
+  },
+  { immediate: true }
+);
+
+function cleanFormFields() {
+  name.value = "";
+  pageId.value = "";
+  accessToken.value = "";
+  username.value = "";
+  password.value = "";
+  accessKey.value = "";
+  accessSecret.value = "";
+  consumerKey.value = "";
+  consumerSecret.value = "";
+  bearerToken.value = "";
+}
 </script>
 
 <template>

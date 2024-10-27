@@ -1,13 +1,10 @@
 import axios from "axios";
 import { useAuthStore } from "../stores/authStore";
-import {
-  IFacebook,
-  IInstagram,
-  IX,
-} from "../interfaces/social-network.interface";
+import { useSocialNetworkBuilder } from "../composables/useSocialNetworkBuilder";
 
 const BASE_API_URL = import.meta.env.VITE_API_URL;
 const authStore = useAuthStore();
+const { buildSocialNetwork } = useSocialNetworkBuilder();
 
 export const socialNetworkService = {
   getSocialNetworks: async () => {
@@ -24,37 +21,21 @@ export const socialNetworkService = {
     }
   },
   createSocialNetwork: async (socialNetwork: any) => {
-    let newSocialNetwork: IFacebook | IInstagram | IX | null = null;
-
-    if (socialNetwork.social_network_type === "FB") {
-      newSocialNetwork = {
-        social_network_type: socialNetwork.social_network_type,
+    const newSocialNetwork = buildSocialNetwork(
+      socialNetwork.social_network_type,
+      {
         name: socialNetwork.name,
         page_id: socialNetwork.page_id,
         page_access_token: socialNetwork.page_access_token,
-      };
-    }
-
-    if (socialNetwork.social_network_type === "IG") {
-      newSocialNetwork = {
-        social_network_type: socialNetwork.social_network_type,
-        name: socialNetwork.name,
         username: socialNetwork.username,
         password: socialNetwork.password,
-      };
-    }
-
-    if (socialNetwork.social_network_type === "X") {
-      newSocialNetwork = {
-        social_network_type: socialNetwork.social_network_type,
-        name: socialNetwork.name,
         access_key: socialNetwork.access_key,
         access_secret: socialNetwork.access_secret,
         consumer_key: socialNetwork.consumer_key,
         consumer_secret: socialNetwork.consumer_secret,
         bearer_token: socialNetwork.bearer_token,
-      };
-    }
+      }
+    );
 
     const response = await axios.post(
       `${BASE_API_URL}social-network/create/`,
@@ -67,6 +48,39 @@ export const socialNetworkService = {
     );
 
     if (response.status === 201) {
+      return response.status;
+    } else {
+      throw new Error(response.data);
+    }
+  },
+  updateSocialNetwork: async (id: number, socialNetwork: any) => {
+    const updatedSocialNetwork = buildSocialNetwork(
+      socialNetwork.social_network_type,
+      {
+        name: socialNetwork.name,
+        page_id: socialNetwork.page_id,
+        page_access_token: socialNetwork.page_access_token,
+        username: socialNetwork.username,
+        password: socialNetwork.password,
+        access_key: socialNetwork.access_key,
+        access_secret: socialNetwork.access_secret,
+        consumer_key: socialNetwork.consumer_key,
+        consumer_secret: socialNetwork.consumer_secret,
+        bearer_token: socialNetwork.bearer_token,
+      }
+    );
+
+    const response = await axios.put(
+      `${BASE_API_URL}social-network/update/${id}/`,
+      updatedSocialNetwork,
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+      }
+    );
+
+    if (response.status === 200) {
       return response.status;
     } else {
       throw new Error(response.data);

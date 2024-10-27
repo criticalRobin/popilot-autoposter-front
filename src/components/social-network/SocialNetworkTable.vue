@@ -5,18 +5,25 @@ import Paginator from "../shared/Paginator.vue";
 import { useFilter } from "../../composables/useFilter";
 import Searcher from "../shared/Searcher.vue";
 import SocialNetworkAddDrop from "./SocialNetworkAddDrop.vue";
+import SocialNetworkCreateUpdateModal from "./SocialNetworkCreateUpdateModal.vue";
 
 const props = defineProps<{
   columns: string[];
   data: IBaseSocialNetwork[];
-  onEdit: (item: IBaseSocialNetwork) => void;
-  onDelete: (item: IBaseSocialNetwork) => void;
   pageChange: (page: number) => void;
   currentPage: number;
   totalPages: number;
 }>();
 
 const filterText = ref("");
+
+const modalRef = ref<InstanceType<
+  typeof SocialNetworkCreateUpdateModal
+> | null>(null);
+
+function openModal(socialNetworkType: string, socialNetworkObject: any) {
+  modalRef.value?.openModal(socialNetworkType, socialNetworkObject);
+}
 
 const filteredData = computed(() => {
   const { filteredData: newFilteredData } = useFilter(
@@ -98,13 +105,12 @@ const filteredData = computed(() => {
           </td>
           <td class="text-center flex justify-center gap-2">
             <button
-              @click="props.onEdit(item)"
+              @click="openModal(item.social_network_type, item)"
               class="btn btn-square text-erieblack bg-yellow-400 hover:bg-yellow-500"
             >
               <i class="fa fa-edit text-xl"></i>
             </button>
             <button
-              @click="props.onDelete(item)"
               class="btn btn-square text-erieblack bg-red-400 hover:bg-red-500"
             >
               <i class="fa fa fa-trash text-xl"></i>
@@ -127,4 +133,5 @@ const filteredData = computed(() => {
       </tfoot>
     </table>
   </div>
+  <SocialNetworkCreateUpdateModal ref="modalRef" />
 </template>

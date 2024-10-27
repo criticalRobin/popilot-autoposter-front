@@ -36,14 +36,6 @@ const pageChange = (page: number) => {
   currentPage.value = page;
 };
 
-const onEdit = (item: IBaseSocialNetwork) => {
-  console.log("Edit item:", item);
-};
-
-const onDelete = (item: IBaseSocialNetwork) => {
-  console.log("Delete item:", item);
-};
-
 onMounted(() => {
   socialNetworkStore.getSocialNetworks();
 });
@@ -54,8 +46,6 @@ onMounted(() => {
   <SocialNetworkTable
     :columns="columns"
     :data="paginatedData"
-    :onEdit="onEdit"
-    :onDelete="onDelete"
     :pageChange="pageChange"
     :currentPage="currentPage"
     :totalPages="totalPages"
