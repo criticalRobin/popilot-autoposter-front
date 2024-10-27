@@ -6,6 +6,7 @@ import { useFilter } from "../../composables/useFilter";
 import Searcher from "../shared/Searcher.vue";
 import SocialNetworkAddDrop from "./SocialNetworkAddDrop.vue";
 import SocialNetworkCreateUpdateModal from "./SocialNetworkCreateUpdateModal.vue";
+import SocialNetworkDeleteModal from "./SocialNetworkDeleteModal.vue";
 
 const props = defineProps<{
   columns: string[];
@@ -17,12 +18,22 @@ const props = defineProps<{
 
 const filterText = ref("");
 
-const modalRef = ref<InstanceType<
+const modalCreateUpdateRef = ref<InstanceType<
   typeof SocialNetworkCreateUpdateModal
 > | null>(null);
+const modalDeleteRef = ref<InstanceType<
+  typeof SocialNetworkDeleteModal
+> | null>(null);
 
-function openModal(socialNetworkType: string, socialNetworkObject: any) {
-  modalRef.value?.openModal(socialNetworkType, socialNetworkObject);
+function openCreateUpdateModal(
+  socialNetworkType: string,
+  socialNetworkObject: any
+) {
+  modalCreateUpdateRef.value?.openModal(socialNetworkType, socialNetworkObject);
+}
+
+function openDeleteModal(socialNetworkObject: any) {
+  modalDeleteRef.value?.openModal(socialNetworkObject);
 }
 
 const filteredData = computed(() => {
@@ -105,12 +116,13 @@ const filteredData = computed(() => {
           </td>
           <td class="text-center flex justify-center gap-2">
             <button
-              @click="openModal(item.social_network_type, item)"
+              @click="openCreateUpdateModal(item.social_network_type, item)"
               class="btn btn-square text-erieblack bg-yellow-400 hover:bg-yellow-500"
             >
               <i class="fa fa-edit text-xl"></i>
             </button>
             <button
+              @click="openDeleteModal(item)"
               class="btn btn-square text-erieblack bg-red-400 hover:bg-red-500"
             >
               <i class="fa fa fa-trash text-xl"></i>
@@ -133,5 +145,6 @@ const filteredData = computed(() => {
       </tfoot>
     </table>
   </div>
-  <SocialNetworkCreateUpdateModal ref="modalRef" />
+  <SocialNetworkCreateUpdateModal ref="modalCreateUpdateRef" />
+  <SocialNetworkDeleteModal ref="modalDeleteRef" />
 </template>

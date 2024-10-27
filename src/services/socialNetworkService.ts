@@ -86,4 +86,20 @@ export const socialNetworkService = {
       throw new Error(response.data);
     }
   },
+  deleteSocialNetwork: async (id: number) => {
+    const response = await axios.delete(
+      `${BASE_API_URL}social-network/delete/${id}/`,
+      {
+        headers: {
+          Authorization: `Bearer ${authStore.token}`,
+        },
+      }
+    );
+
+    if (response.status === 204) {
+      return response.status;
+    } else {
+      throw new Error(response.data);
+    }
+  },
 };

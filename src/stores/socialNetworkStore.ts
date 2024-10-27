@@ -36,6 +36,14 @@ export const useSocialNetworkStore = defineStore("socialNetwork", () => {
     }
   };
 
+  const deleteSocialNetwork = async (id: number) => {
+    try {
+      await socialNetworkService.deleteSocialNetwork(id);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return {
     facebookAccounts,
     instagramAccounts,
@@ -43,5 +51,6 @@ export const useSocialNetworkStore = defineStore("socialNetwork", () => {
     getSocialNetworks,
     createSocialNetwork,
     updateSocialNetwork,
+    deleteSocialNetwork,
   };
 });
