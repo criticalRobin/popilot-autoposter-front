@@ -22,7 +22,7 @@ const onInput = () => {
     <input
       type="text"
       :placeholder="placeholder"
-      class="input w-full max-w-xs font-light"
+      class="input input-bordered w-full max-w-xs font-light"
       v-model="searchText"
       @input="onInput"
     />

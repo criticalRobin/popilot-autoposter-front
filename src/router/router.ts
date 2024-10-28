@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "../stores/authStore";
 
-// Implementación de lazy loading para los componentes
 const HomeView = () => import("../views/HomeView.vue");
 const LoginView = () => import("../views/LoginView.vue");
 const SocialNetworkView = () => import("../views/SocialNetworkView.vue");
+const PostView = () => import("../views/PostView.vue");
+const PostCreateView = () => import("../views/PostCreateView.vue");
 const BaseLayout = () => import("../layouts/BaseLayout.vue");
 
 const routes = [
@@ -27,6 +28,18 @@ const routes = [
         path: "social-network",
         name: "SocialNetwork",
         component: SocialNetworkView,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "post",
+        name: "Post",
+        component: PostView,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "newpost",
+        name: "NewPost",
+        component: PostCreateView,
         meta: { requiresAuth: true },
       },
     ],

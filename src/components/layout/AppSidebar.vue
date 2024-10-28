@@ -17,6 +17,10 @@ const setActive = (menu: string) => {
   if (menu === 'social-network') {
     router.push({ name: "SocialNetwork" });
   }
+
+  if (menu === 'posts') {
+    router.push({ name: "Post" });
+  }
 }
 </script>
 

@@ -13,9 +13,7 @@ function openModal(socialNetworkType: string) {
 
 <template>
   <details class="dropdown dropdown-end">
-    <summary
-      class="btn m-1 bg-lapislazuli hover:bg-powderblue text-white hover:text-erieblack"
-    >
+    <summary class="btn m-1 bg-lapislazuli hover:bg-erieblack text-white">
       <i class="fa fa-plus text-xl mt-1"></i> Nueva Red Social
     </summary>
     <ul

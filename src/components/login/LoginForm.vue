@@ -57,7 +57,7 @@ const handleSubmit = async () => {
       />
     </label>
     <button
-      class="btn bg-lapislazuli hover:bg-powderblue hover:text-erieblack border-none w-full max-w-xs mt-12 text-white"
+      class="btn bg-lapislazuli hover:bg-erieblack border-none w-full max-w-xs mt-12 text-white"
     >
       Iniciar Sesión <i class="fa fa-sign-in text-xl"></i>
     </button>

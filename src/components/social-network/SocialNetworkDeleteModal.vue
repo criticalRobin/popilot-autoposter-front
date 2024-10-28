@@ -77,7 +77,7 @@ const deleteSocialNetwork = async () => {
       </p>
       <button
         @click="deleteSocialNetwork"
-        class="btn bg-lapislazuli hover:bg-powderblue hover:text-erieblack border-none w-full mt-4 text-white"
+        class="btn bg-lapislazuli hover:bg-erieblack border-none w-full mt-4 text-white"
       >
         Eliminar <i class="fa fa-trash text-xl"></i>
       </button>

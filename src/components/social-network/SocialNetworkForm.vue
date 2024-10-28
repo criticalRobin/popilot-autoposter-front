@@ -8,7 +8,7 @@ const props = defineProps<{
   socialNetworkObject: any | null;
 }>();
 
-const name = ref("");
+const title = ref("");
 const pageId = ref("");
 const accessToken = ref("");
 const username = ref("");
@@ -25,7 +25,7 @@ const { buildSocialNetwork } = useSocialNetworkBuilder();
 
 const handleSubmit = async () => {
   const socialNetwork = buildSocialNetwork(props.socialNetworkType, {
-    name: name.value,
+    name: title.value,
     page_id: pageId.value,
     page_access_token: accessToken.value,
     username: username.value,
@@ -54,7 +54,7 @@ watch(
   () => props.socialNetworkObject,
   (newVal) => {
     if (newVal) {
-      name.value = newVal.name || "";
+      title.value = newVal.name || "";
       if (props.socialNetworkType === "FB") {
         pageId.value = newVal.page_id || "";
         accessToken.value = newVal.page_access_token || "";
@@ -74,7 +74,7 @@ watch(
 );
 
 function cleanFormFields() {
-  name.value = "";
+  title.value = "";
   pageId.value = "";
   accessToken.value = "";
   username.value = "";
@@ -101,7 +101,7 @@ function cleanFormFields() {
         placeholder="Nombre"
         class="input input-bordered w-full max-w-xs"
         required
-        v-model="name"
+        v-model="title"
       />
     </label>
     <label
@@ -242,7 +242,7 @@ function cleanFormFields() {
       />
     </label>
     <button
-      class="btn bg-lapislazuli hover:bg-powderblue hover:text-erieblack border-none w-5/12 mt-4 text-white"
+      class="btn bg-lapislazuli hover:bg-erieblack border-none w-5/12 mt-4 text-white"
     >
       Guardar <i class="fa fa-save text-xl"></i>
     </button>
