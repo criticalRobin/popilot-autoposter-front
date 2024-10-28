@@ -6,6 +6,7 @@ const LoginView = () => import("../views/LoginView.vue");
 const SocialNetworkView = () => import("../views/SocialNetworkView.vue");
 const PostView = () => import("../views/PostView.vue");
 const PostCreateView = () => import("../views/PostCreateView.vue");
+const PremiumView = () => import("../views/PremiumView.vue");
 const BaseLayout = () => import("../layouts/BaseLayout.vue");
 
 const routes = [
@@ -40,6 +41,12 @@ const routes = [
         path: "newpost",
         name: "NewPost",
         component: PostCreateView,
+        meta: { requiresAuth: true },
+      },
+      {
+        path: "premium",
+        name: "Premium",
+        component: PremiumView,
         meta: { requiresAuth: true },
       },
     ],

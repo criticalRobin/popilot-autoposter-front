@@ -9,13 +9,7 @@ const postStore = usePostStore();
 const posts = computed<IPost[]>(() => postStore.posts);
 
 const items = [{ label: "Inicio", urlPathName: "Home" }, { label: "Posts" }];
-const columns = [
-  "Título",
-  "Descripción",
-  "Imagen",
-  "Posteado En",
-  "Fecha de Creación",
-];
+const columns = ["Título", "Descripción", "Imagen", "Posteado En"];
 
 const currentPage = ref(1);
 const itemsPerPage = 3;

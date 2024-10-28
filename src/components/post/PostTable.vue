@@ -108,9 +108,6 @@ onMounted(() => {
               >
             </div>
           </td>
-          <td class="text-center">
-            {{ new Date(item.created_at).toLocaleDateString() }}
-          </td>
         </tr>
       </tbody>
       <tfoot class="border-t border-gray-300 w-full">

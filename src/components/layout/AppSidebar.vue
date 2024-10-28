@@ -21,6 +21,10 @@ const setActive = (menu: string) => {
   if (menu === 'posts') {
     router.push({ name: "Post" });
   }
+
+  if (menu === 'premium') {
+    router.push({ name: "Premium" });
+  }
 }
 </script>
 
