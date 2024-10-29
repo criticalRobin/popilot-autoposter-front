@@ -21,7 +21,7 @@ export const useAuthStore = defineStore("auth", () => {
     }
     if (storedUser) {
       user.value = JSON.parse(storedUser);
-      isPremiumUser.value = user.value?.isPremiumUser || false;
+      isPremiumUser.value = user.value?.is_premium_user || false;
     }
   };
 

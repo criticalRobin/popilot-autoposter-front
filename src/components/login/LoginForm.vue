@@ -20,7 +20,7 @@ const handleSubmit = async () => {
   await authStore.login({ username: username.value, password: password.value });
 
   if (authStore.isLogged) {
-    router.push("/home");
+    router.push({ name: "Home" });
   }
 };
 </script>

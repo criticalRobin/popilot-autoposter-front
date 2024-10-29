@@ -7,5 +7,5 @@ export interface ILoggedUser {
   id: number;
   username: string;
   email: string;
-  isPremiumUser: boolean;
+  is_premium_user: boolean;
 }

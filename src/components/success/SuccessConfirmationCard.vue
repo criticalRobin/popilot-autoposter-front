@@ -1,44 +1,45 @@
 <script lang="ts" setup>
-import { createCheckoutSession } from "../../services/paymentService";
+import { useRouter } from "vue-router";
+import { useSuccessStore } from "../../stores/successStore";
 
-const goToCheckout = () => {
-  createCheckoutSession();
-};
+const successStore = useSuccessStore();
+const router = useRouter();
 
-const redirect = () => {
-  window.location.href = "/success";
+const handleContinue = async () => {
+  await successStore.updateUserPremiumStatus();
+
+  router.push({ name: "Home" });
 };
 </script>
 
 <template>
   <div
-    class="bg-white rounded-xl px-12 text-center h-full w-3/5 flex flex-col justify-center"
+    class="bg-white rounded-xl px-12 text-center h-3/5 w-3/5 flex flex-col justify-center"
   >
     <div class="flex flex-col flex-1 justify-center">
       <span class="text-3xl mt-1 mb-1">👑</span>
       <span class="text-lapislazuli font-semibold text-lg">
-        Conviertete en Premium
+        Ahora eres un usuario premium!
       </span>
       <span class="text-erieblack">
-        No te conformes con lo que ofrece tu cuenta gratuita, llévala al
-        siguiente nivel 🚀!
+        Gracias por confiar en nosotros, ahora puedes disfrutar de todas las
+        ventajas de ser un usuario premium.
       </span>
     </div>
     <div class="flex flex-row mt-4">
-      <div class="basis-3/5">
+      <div class="basis-5/12">
         <img
-          src="../../assets/payment.svg"
+          src="../../assets/purchase.svg"
           alt="payment-image"
           class="object-cover"
         />
       </div>
       <div
-        class="flex flex-col items-start py-4 px-4 gap-2 shadow-md rounded-xl mb-4 basis-2/5"
+        class="flex flex-col items-start py-4 px-4 gap-2 shadow-md rounded-xl mb-4 basis-7/12"
       >
-        <span class="text-erieblack font-bold text-2xl">Premium</span>
+        <span class="text-erieblack font-bold text-2xl">Tu plan actual</span>
         <p class="text-start text-erieblack">
-          Con una cuenta premium vas a tener acceso a las siguientes
-          características de PoPilot:
+          Con tu plan actual puedes disfrutar de los siguientes beneficios:
         </p>
         <ul class="flex flex-col items-start mt-1">
           <li class="text-moonstone font-semibold">
@@ -57,15 +58,15 @@ const redirect = () => {
         <div class="flex flex-col items-start mt-1">
           <span class="text-erieblack font-bold text-3xl">$10</span>
           <span class="text-powderblue font-semibold text-xs"
-            >Un solo pago!</span
+            >Monto pagado</span
           >
         </div>
         <button
           type="button"
-          @click="goToCheckout"
+          @click="handleContinue"
           class="btn bg-lapislazuli hover:bg-erieblack border-none w-32 text-white"
         >
-          <i class="fa fa-credit-card text-md mt-1"></i> Ir a Pagar
+          <i class="fa fa-heart text-md mt-1"></i> Continuar
         </button>
       </div>
     </div>
