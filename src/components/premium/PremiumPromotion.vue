@@ -1,4 +1,10 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import { createCheckoutSession } from "../../services/paymentService";
+
+const goToCheckout = () => {
+  createCheckoutSession();
+};
+</script>
 
 <template>
   <div
@@ -52,6 +58,7 @@
         </div>
         <button
           type="button"
+          @click="goToCheckout"
           class="btn bg-lapislazuli hover:bg-erieblack border-none w-32 text-white"
         >
           <i class="fa fa-credit-card text-md mt-1"></i> Ir a Pagar
