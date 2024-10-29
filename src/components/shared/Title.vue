@@ -18,7 +18,8 @@ const router = useRouter();
 <template>
   <div class="flex flex-col">
     <span v-if="router.currentRoute.value.name === 'Home'" class="text-xl">
-      Bienvenido de vuelta <strong>{{ authStore.user?.username }}</strong
+      Bienvenido de vuelta
+      <strong class="text-lapislazuli">{{ authStore.user?.username }}</strong
       >, te hemos hechado de menos! 👋
     </span>
     <span

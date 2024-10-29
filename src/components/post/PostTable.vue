@@ -67,7 +67,7 @@ onMounted(() => {
         type="button"
         class="btn bg-lapislazuli hover:bg-erieblack border-none w-44 text-white"
       >
-        Postear <i class="fa fa-id-badge text-xl"></i>
+        <i class="fa fa-id-badge text-xl"></i> Postear
       </button>
     </div>
     <table class="table w-full text-center">
