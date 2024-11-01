@@ -12,6 +12,8 @@ const closeModal = () => {
   dialogRef.value?.close();
 };
 
+const emit = defineEmits(["showAlert"]);
+
 defineExpose({
   openModal(socialNetworkObject: any | null) {
     dialogRef.value?.showModal();
@@ -25,12 +27,23 @@ defineExpose({
 });
 
 const deleteSocialNetwork = async () => {
-  if (socialNetworkObjectRef.value) {
-    await socialNetworkStore.deleteSocialNetwork(
-      socialNetworkObjectRef.value.id
-    );
-    closeModal();
-    socialNetworkStore.getSocialNetworks();
+  try {
+    if (socialNetworkObjectRef.value) {
+      await socialNetworkStore.deleteSocialNetwork(
+        socialNetworkObjectRef.value.id
+      );
+      emit("showAlert", {
+        status: "success",
+        message: "Red social eliminada con éxito",
+      });
+      closeModal();
+      socialNetworkStore.getSocialNetworks();
+    }
+  } catch (error) {
+    emit("showAlert", {
+      status: "error",
+      message: "Hubo un problema al eliminar la red social",
+    });
   }
 };
 </script>

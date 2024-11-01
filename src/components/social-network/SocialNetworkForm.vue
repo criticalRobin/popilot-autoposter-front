@@ -19,35 +19,53 @@ const consumerKey = ref("");
 const consumerSecret = ref("");
 const bearerToken = ref("");
 
-const emit = defineEmits(["submitSuccess"]);
+const emit = defineEmits(["submitSuccess", "showAlert"]);
 const socialNetworkStore = useSocialNetworkStore();
 const { buildSocialNetwork } = useSocialNetworkBuilder();
 
 const handleSubmit = async () => {
-  const socialNetwork = buildSocialNetwork(props.socialNetworkType, {
-    name: title.value,
-    page_id: pageId.value,
-    page_access_token: accessToken.value,
-    username: username.value,
-    password: password.value,
-    access_key: accessKey.value,
-    access_secret: accessSecret.value,
-    consumer_key: consumerKey.value,
-    consumer_secret: consumerSecret.value,
-    bearer_token: bearerToken.value,
-  });
+  try {
+    const socialNetwork = buildSocialNetwork(props.socialNetworkType, {
+      name: title.value,
+      page_id: pageId.value,
+      page_access_token: accessToken.value,
+      username: username.value,
+      password: password.value,
+      access_key: accessKey.value,
+      access_secret: accessSecret.value,
+      consumer_key: consumerKey.value,
+      consumer_secret: consumerSecret.value,
+      bearer_token: bearerToken.value,
+    });
 
-  if (props.socialNetworkObject) {
-    await socialNetworkStore.updateSocialNetwork(
-      props.socialNetworkObject.id,
-      socialNetwork
-    );
-  } else {
-    await socialNetworkStore.createSocialNetwork(socialNetwork);
+    if (props.socialNetworkObject) {
+      await socialNetworkStore.updateSocialNetwork(
+        props.socialNetworkObject.id,
+        socialNetwork
+      );
+      emit("showAlert", {
+        status: "success",
+        message: "Red social actualizada con éxito",
+      });
+    }
+
+    if (!props.socialNetworkObject) {
+      await socialNetworkStore.createSocialNetwork(socialNetwork);
+      emit("showAlert", {
+        status: "success",
+        message: "Red social creada con éxito",
+      });
+    }
+
+    emit("submitSuccess");
+    cleanFormFields();
+    socialNetworkStore.getSocialNetworks();
+  } catch (error) {
+    emit("showAlert", {
+      status: "error",
+      message: "Hubo un problema en la acción",
+    });
   }
-  emit("submitSuccess");
-  cleanFormFields();
-  socialNetworkStore.getSocialNetworks();
 };
 
 watch(

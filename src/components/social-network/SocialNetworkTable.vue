@@ -17,6 +17,7 @@ const props = defineProps<{
 }>();
 
 const filterText = ref("");
+const emit = defineEmits(["showAlert"]);
 
 const modalCreateUpdateRef = ref<InstanceType<
   typeof SocialNetworkCreateUpdateModal
@@ -145,6 +146,12 @@ const filteredData = computed(() => {
       </tfoot>
     </table>
   </div>
-  <SocialNetworkCreateUpdateModal ref="modalCreateUpdateRef" />
-  <SocialNetworkDeleteModal ref="modalDeleteRef" />
+  <SocialNetworkCreateUpdateModal
+    ref="modalCreateUpdateRef"
+    @showAlert="$emit('showAlert', $event)"
+  />
+  <SocialNetworkDeleteModal
+    ref="modalDeleteRef"
+    @showAlert="$emit('showAlert', $event)"
+  />
 </template>

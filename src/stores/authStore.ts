@@ -40,7 +40,7 @@ export const useAuthStore = defineStore("auth", () => {
         localStorage.setItem("user", JSON.stringify(loggedUser));
       }
     } catch (e) {
-      console.error(e);
+      throw e;
     }
   };
 

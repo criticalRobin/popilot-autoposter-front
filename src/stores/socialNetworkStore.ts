@@ -24,7 +24,7 @@ export const useSocialNetworkStore = defineStore("socialNetwork", () => {
     try {
       await socialNetworkService.createSocialNetwork(socialNetwork);
     } catch (e) {
-      console.error(e);
+      throw e;
     }
   };
 
@@ -32,7 +32,7 @@ export const useSocialNetworkStore = defineStore("socialNetwork", () => {
     try {
       await socialNetworkService.updateSocialNetwork(id, socialNetwork);
     } catch (e) {
-      console.error(e);
+      throw e;
     }
   };
 
@@ -40,7 +40,7 @@ export const useSocialNetworkStore = defineStore("socialNetwork", () => {
     try {
       await socialNetworkService.deleteSocialNetwork(id);
     } catch (e) {
-      console.error(e);
+      throw e;
     }
   };
 

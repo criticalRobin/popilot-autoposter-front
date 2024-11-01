@@ -52,6 +52,7 @@ defineExpose({
           socialNetworkObjectRef !== null ? socialNetworkObjectRef : null
         "
         @submitSuccess="closeModal"
+        @showAlert="$emit('showAlert', $event)"
       />
     </div>
   </dialog>

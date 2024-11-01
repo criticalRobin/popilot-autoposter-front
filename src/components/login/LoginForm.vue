@@ -8,6 +8,8 @@ const router = useRouter();
 const username = ref("");
 const password = ref("");
 
+const emit = defineEmits(["showAlert"]);
+
 onMounted(() => {
   authStore.loadFromLocalStorage();
 
@@ -17,10 +19,24 @@ onMounted(() => {
 });
 
 const handleSubmit = async () => {
-  await authStore.login({ username: username.value, password: password.value });
+  try {
+    await authStore.login({
+      username: username.value,
+      password: password.value,
+    });
 
-  if (authStore.isLogged) {
-    router.push({ name: "Home" });
+    if (authStore.isLogged) {
+      emit("showAlert", {
+        status: "success",
+        message: "Inicio de sesión exitoso",
+      });
+      router.push({ name: "Home" });
+    }
+  } catch (error) {
+    emit("showAlert", {
+      status: "error",
+      message: "Error al iniciar sesión",
+    });
   }
 };
 </script>

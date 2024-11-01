@@ -16,7 +16,7 @@ export const usePostStore = defineStore("post", () => {
     try {
       await postService.createPost(formData);
     } catch (e) {
-      console.error(e);
+      throw e;
     }
   };
 
