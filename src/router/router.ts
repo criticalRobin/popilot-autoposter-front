@@ -4,6 +4,7 @@ import { useAuthStore } from "../stores/authStore";
 const HomeView = () => import("../views/HomeView.vue");
 const LoginView = () => import("../views/LoginView.vue");
 const SuccessView = () => import("../views/SuccessView.vue");
+const LoadingView = () => import("../views/LoadingView.vue");
 const SocialNetworkView = () => import("../views/SocialNetworkView.vue");
 const PostView = () => import("../views/PostView.vue");
 const PostCreateView = () => import("../views/PostCreateView.vue");
@@ -20,6 +21,12 @@ const routes = [
     path: "/success",
     name: "Success",
     component: SuccessView,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/loading",
+    name: "Loading",
+    component: LoadingView,
     meta: { requiresAuth: true },
   },
   {

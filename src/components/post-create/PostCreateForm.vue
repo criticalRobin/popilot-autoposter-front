@@ -18,6 +18,8 @@ const socialNetworks = ref<IBaseSocialNetwork[]>([]);
 const addModalRef = ref<InstanceType<typeof PostCreateAddModal> | null>(null);
 const listModalRef = ref<InstanceType<typeof PostCreateListModal> | null>(null);
 
+const emit = defineEmits(["showAlert"]);
+
 function openAddModal() {
   addModalRef.value?.openModal();
 }
@@ -65,7 +67,18 @@ const handleSubmit = async () => {
     formData.append("image", image.value);
   }
 
-  await postStore.createPost(formData);
+  try {
+    router.push({ name: "Loading" });
+    await postStore.createPost(formData);
+  } catch (error) {
+    emit("showAlert", {
+      status: "error",
+      message: "Error al crear el post",
+    });
+    router.push({ name: "Post" });
+  } finally {
+    router.push({ name: "Post" });
+  }
 };
 </script>
 
@@ -106,7 +119,6 @@ const handleSubmit = async () => {
       <input
         type="datetime-local"
         class="input input-bordered w-full max-w-xs"
-        required
         v-model="scheduledAt"
       />
     </label>

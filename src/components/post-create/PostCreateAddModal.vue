@@ -41,7 +41,7 @@ const filteredData = computed(() => {
 });
 
 function addSocialNetwork(sn: IBaseSocialNetwork) {
-  emit("add-social-network", sn); // Emitir el evento con el objeto de red social
+  emit("add-social-network", sn); 
 }
 </script>
 
