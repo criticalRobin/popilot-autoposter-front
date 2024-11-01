@@ -144,7 +144,7 @@ const handleSubmit = async () => {
     </label>
     <button
       type="submit"
-      class="btn bg-lapislazuli hover:bg-erieblack border-none w-full max-w-xs mt-4 text-white"
+      class="btn bg-lapislazuli hover:bg-erieblack border-none w-full max-w-xs mt-2 text-white"
     >
       Guardar <i class="fa fa-save text-xl"></i>
     </button>

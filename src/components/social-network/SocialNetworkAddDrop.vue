@@ -19,9 +19,15 @@ function openModal(socialNetworkType: string) {
     <ul
       class="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
     >
-      <li @click="openModal('FB')"><a>Facebook</a></li>
-      <li @click="openModal('IG')"><a>Instagram</a></li>
-      <li @click="openModal('X')"><a>X</a></li>
+      <li @click="openModal('FB')">
+        <a class="text-lapislazuli font-semibold">Facebook</a>
+      </li>
+      <li @click="openModal('IG')">
+        <a class="text-ig font-semibold">Instagram</a>
+      </li>
+      <li @click="openModal('X')">
+        <a class="text-erieblack font-semibold">X</a>
+      </li>
     </ul>
   </details>
   <SocialNetworkCreateUpdateModal ref="modalRef" />
