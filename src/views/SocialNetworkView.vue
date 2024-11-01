@@ -58,9 +58,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="flex flex-row justify-between">
+  <div>
     <Title title="Redes Sociales" :breadcrumbs="items" />
-    <Alert v-if="showAlert" :status="alertStatus" :message="alertMessage" />
+    <Alert
+      v-if="showAlert"
+      class="absolute top-20 right-8"
+      :status="alertStatus"
+      :message="alertMessage"
+    />
   </div>
   <SocialNetworkTable
     :columns="columns"
