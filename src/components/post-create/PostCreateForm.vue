@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onBeforeUnmount, watch } from "vue";
 import { useAuthStore } from "../../stores/authStore";
 import PostCreateAddModal from "./PostCreateAddModal.vue";
 import PostCreateListModal from "./PostCreateListModal.vue";
@@ -14,11 +14,20 @@ const title = ref("");
 const description = ref("");
 const scheduledAt = ref("");
 const image = ref<File | null>(null);
+const imagePreviewUrl = ref<string | null>(null);
 const socialNetworks = ref<IBaseSocialNetwork[]>([]);
 const addModalRef = ref<InstanceType<typeof PostCreateAddModal> | null>(null);
 const listModalRef = ref<InstanceType<typeof PostCreateListModal> | null>(null);
 
 const emit = defineEmits(["showAlert"]);
+
+watch(image, (newImage) => {
+  if (newImage) {
+    imagePreviewUrl.value = URL.createObjectURL(newImage);
+  } else {
+    imagePreviewUrl.value = null;
+  }
+});
 
 function openAddModal() {
   addModalRef.value?.openModal();
@@ -53,7 +62,6 @@ const deleteSocialNetwork = (sn: IBaseSocialNetwork) => {
 
 const handleSubmit = async () => {
   const socialNetworksIdArray = socialNetworks.value.map((sn) => sn.id);
-
   const formData = new FormData();
   formData.append("title", title.value);
   formData.append("description", description.value);
@@ -80,6 +88,12 @@ const handleSubmit = async () => {
     router.push({ name: "Post" });
   }
 };
+
+onBeforeUnmount(() => {
+  if (image.value) {
+    URL.revokeObjectURL(imagePreviewUrl.value!);
+  }
+});
 </script>
 
 <template>
@@ -154,9 +168,88 @@ const handleSubmit = async () => {
         @change="handleFileChange"
       />
     </label>
+    <label v-if="authStore.isPremiumUser" class="form-control">
+      <div class="label">
+        <span class="label-text text-moonstone ml-4">Previsualización</span>
+      </div>
+      <div class="mockup-phone">
+        <div class="camera"></div>
+        <div class="display">
+          <div
+            class="artboard artboard-demo phone-1 flex flex-col justify-center items-center"
+          >
+            <div
+              class="relative w-full max-w-md bg-white border border-gray-300 rounded-lg shadow-lg overflow-hidden"
+            >
+              <div class="flex items-center px-2 py-4">
+                <div>
+                  <h3 class="text-lg font-semibold text-lapislazuli">
+                    {{ authStore.user?.username }}
+                  </h3>
+                  <p class="text-xs text-gray-500">Hace 5 minutos</p>
+                </div>
+              </div>
+              <img
+                v-if="imagePreviewUrl"
+                :src="imagePreviewUrl"
+                alt="Post Image"
+                class="w-full h-72 object-cover"
+              />
+              <div class="p-2">
+                <h2 class="text-xl font-semibold text-lapislazuli truncate">
+                  {{ title }}
+                </h2>
+                <p class="text-sm text-erieblack mt-1">{{ description }}</p>
+              </div>
+              <div class="flex justify-between border-t border-gray-200 p-2">
+                <button
+                  disabled
+                  class="flex items-center text-moonstone hover:text-lapislazuli"
+                >
+                  <i class="fa fa-heart"></i>
+                  <span class="ml-1">Me gusta</span>
+                </button>
+                <button
+                  disabled
+                  class="flex items-center text-moonstone hover:text-lapislazuli"
+                >
+                  <i class="fa fa-comment"></i>
+                  <span class="ml-1">Comentar</span>
+                </button>
+                <button
+                  disabled
+                  class="flex items-center text-moonstone hover:text-lapislazuli"
+                >
+                  <i class="fa fa-share"></i>
+                  <span class="ml-1">Compartir</span>
+                </button>
+              </div>
+              <div class="p-4 border-t border-gray-200">
+                <h4 class="font-semibold text-erieblack">Comentarios:</h4>
+                <div class="mt-2">
+                  <div class="flex items-start mb-2">
+                    <img
+                      src="../../assets/user-logo.png"
+                      alt="Commenter Picture"
+                      class="w-8 h-8 rounded-full mr-2"
+                    />
+                    <div>
+                      <span class="font-semibold text-erieblack">Comentador123:</span>
+                      <span class="text-sm text-erieblack"
+                        > Gran publicación!</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </label>
     <button
       type="submit"
-      class="btn bg-lapislazuli hover:bg-erieblack border-none w-full max-w-xs mt-2 text-white"
+      class="btn bg-lapislazuli hover:bg-erieblack border-none w-full max-w-xs mt-4 text-white"
     >
       Guardar <i class="fa fa-save text-xl"></i>
     </button>
