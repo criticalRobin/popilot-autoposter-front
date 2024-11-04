@@ -78,7 +78,7 @@ onMounted(() => {
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="filteredData.length > 0">
         <tr v-for="item in filteredData" class="border-gray-300">
           <td>{{ item.title }}</td>
           <td>{{ item.description }}</td>
@@ -107,6 +107,13 @@ onMounted(() => {
                 >{{ getSocialNetworkNameAndType(sn)[0] }}</span
               >
             </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="4" class="text-center text-erieblack py-16">
+            No hay datos
           </td>
         </tr>
       </tbody>

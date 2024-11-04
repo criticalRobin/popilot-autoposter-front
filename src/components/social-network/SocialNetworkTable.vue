@@ -61,7 +61,7 @@ const filteredData = computed(() => {
           </th>
         </tr>
       </thead>
-      <tbody>
+      <tbody v-if="filteredData.length > 0">
         <tr
           v-for="(item, index) in filteredData"
           :key="item.id || index"
@@ -128,6 +128,13 @@ const filteredData = computed(() => {
             >
               <i class="fa fa fa-trash text-xl"></i>
             </button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr>
+          <td colspan="4" class="text-center text-erieblack py-16">
+            No hay datos
           </td>
         </tr>
       </tbody>
