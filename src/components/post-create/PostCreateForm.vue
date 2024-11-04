@@ -85,7 +85,11 @@ const handleSubmit = async () => {
     });
     router.push({ name: "Post" });
   } finally {
-    router.push({ name: "Post" });
+    if (scheduledAt.value !== "" || scheduledAt.value !== null) {
+      router.push({ name: "Home" });
+    } else {
+      router.push({ name: "Post" });
+    }
   }
 };
 
@@ -234,9 +238,11 @@ onBeforeUnmount(() => {
                       class="w-8 h-8 rounded-full mr-2"
                     />
                     <div>
-                      <span class="font-semibold text-erieblack">Comentador123:</span>
-                      <span class="text-sm text-erieblack"
-                        > Gran publicación!</span
+                      <span class="font-semibold text-erieblack"
+                        >Comentador123:</span
+                      >
+                      <span class="text-sm text-erieblack">
+                        Gran publicación!</span
                       >
                     </div>
                   </div>

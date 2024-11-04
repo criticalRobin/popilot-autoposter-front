@@ -14,6 +14,15 @@ export const postService = {
 
     return response.data;
   },
+  getScheduledPosts: async () => {
+    const response = await axios.get(`${BASE_API_URL}post/list/scheduled`, {
+      headers: {
+        Authorization: `Bearer ${authStore.token}`,
+      },
+    });
+
+    return response.data;
+  },
   createPost: async (formData: FormData) => {
     const response = await axios.post(`${BASE_API_URL}post/create/`, formData, {
       headers: {
