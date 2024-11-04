@@ -3,12 +3,14 @@ import { ref } from "vue";
 import { authService } from "../services/authService";
 import { IAuth, ILoggedUser } from "../interfaces/auth.interface";
 import { useRouter } from "vue-router";
+import { IUser } from "../interfaces/user.interface";
 
 export const useAuthStore = defineStore("auth", () => {
   const user = ref<ILoggedUser | null>(null);
   const token = ref<string | null>(null);
   const isLogged = ref<boolean | null>(false);
   const isPremiumUser = ref<boolean | null>(false);
+  const createdUser = ref<IUser | null>(null);
   const router = useRouter();
 
   const loadFromLocalStorage = () => {
@@ -44,6 +46,15 @@ export const useAuthStore = defineStore("auth", () => {
     }
   };
 
+  const createUser = async (user: IUser) => {
+    try {
+      await authService.createUser(user);
+      createdUser.value = user;
+    } catch (e) {
+      throw e;
+    }
+  };
+
   const logout = () => {
     token.value = null;
     user.value = null;
@@ -60,8 +71,10 @@ export const useAuthStore = defineStore("auth", () => {
     token,
     isLogged,
     isPremiumUser,
+    createdUser,
     login,
     logout,
     loadFromLocalStorage,
+    createUser,
   };
 });

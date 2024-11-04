@@ -3,6 +3,7 @@ import { useAuthStore } from "../stores/authStore";
 
 const HomeView = () => import("../views/HomeView.vue");
 const LoginView = () => import("../views/LoginView.vue");
+const RegisterView = () => import("../views/RegisterView.vue");
 const SuccessView = () => import("../views/SuccessView.vue");
 const LoadingView = () => import("../views/LoadingView.vue");
 const SocialNetworkView = () => import("../views/SocialNetworkView.vue");
@@ -22,6 +23,11 @@ const routes = [
     name: "Success",
     component: SuccessView,
     meta: { requiresAuth: true },
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: RegisterView,
   },
   {
     path: "/loading",
@@ -65,6 +71,10 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/",
+  },
 ];
 
 const router = createRouter({
@@ -75,7 +85,6 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore();
 
-  // Permitir acceso a la vista de éxito sin estar autenticado
   if (to.path === "/success") {
     next();
   } else if (to.meta.requiresAuth && !authStore.isLogged) {

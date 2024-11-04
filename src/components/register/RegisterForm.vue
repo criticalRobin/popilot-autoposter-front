@@ -1,45 +1,49 @@
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useAuthStore } from "../../stores/authStore";
 import { useRouter } from "vue-router";
 
 const authStore = useAuthStore();
 const router = useRouter();
 const username = ref("");
+const email = ref("");
 const password = ref("");
 
 const emit = defineEmits(["showAlert"]);
 
-onMounted(() => {
-  authStore.loadFromLocalStorage();
-
-  if (authStore.isLogged) {
-    router.push("/home");
-  }
-});
-
-const redirectToRegister = () => {
-  router.push({ name: "Register" });
+const redirectToLogin = () => {
+  router.push({ name: "Login" });
 };
 
 const handleSubmit = async () => {
   try {
-    await authStore.login({
+    await authStore.createUser({
       username: username.value,
+      email: email.value,
       password: password.value,
     });
 
-    if (authStore.isLogged) {
+    if (authStore.createdUser) {
       emit("showAlert", {
         status: "success",
-        message: "Inicio de sesión exitoso",
+        message: "Usuario creado exitosamente",
       });
-      router.push({ name: "Home" });
+
+      await authStore.login({
+        username: username.value,
+        password: password.value,
+      });
+
+      if (authStore.isLogged) {
+        router.push({ name: "Home" });
+      } else {
+        router.push({ name: "Login" });
+      }
     }
   } catch (error) {
     emit("showAlert", {
       status: "error",
-      message: "Error al iniciar sesión",
+      message: "Ha ocurrido un error al crear el usuario",
     });
   }
 };
@@ -53,7 +57,7 @@ const handleSubmit = async () => {
     <label class="form-control w-full max-w-xs">
       <div class="label">
         <span class="label-text text-moonstone"
-          >Cual es tu nombre de usuario?</span
+          >Usa un nombre de usuario genial</span
         >
       </div>
       <input
@@ -66,9 +70,24 @@ const handleSubmit = async () => {
     </label>
     <label class="form-control w-full max-w-xs">
       <div class="label">
-        <span class="label-text text-moonstone">Cual es tu contraseña?</span>
+        <span class="label-text text-moonstone">Ingresa tu correo</span>
       </div>
       <input
+        type="email"
+        placeholder="Correo"
+        class="input input-bordered w-full max-w-xs"
+        required
+        v-model="email"
+      />
+    </label>
+    <label class="form-control w-full max-w-xs">
+      <div class="label">
+        <span class="label-text text-moonstone"
+          >Crea una contraseña segura (min. 6 caracteres)</span
+        >
+      </div>
+      <input
+        minlength="6"
         type="password"
         placeholder="Contraseña"
         class="input input-bordered w-full max-w-xs"
@@ -77,14 +96,14 @@ const handleSubmit = async () => {
       />
     </label>
     <span
-      @click="redirectToRegister"
+      @click="redirectToLogin"
       class="text-sm text-powderblue hover:text-moonstone pt-2 cursor-pointer"
-      >No tienes cuenta? Registrate</span
+      >Ya tienes cuenta? Inicia Sesión</span
     >
     <button
       class="btn bg-lapislazuli hover:bg-moonstone hover:text-erieblack border-none w-full max-w-xs mt-6 text-white"
     >
-      Iniciar Sesión <i class="fa fa-sign-in text-xl"></i>
+      Registrarse <i class="fa fa-user-plus text-xl"></i>
     </button>
   </form>
 </template>
